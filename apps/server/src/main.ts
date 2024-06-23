@@ -5,11 +5,13 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors();
+
   const config = new DocumentBuilder()
-    .setTitle('Mesh_UI Components API') // Set the title of the API
-    .setDescription('Mesh_UI Components API description') // Set the description of the API
-    .setVersion('0.1') // Set the version of the API
-    .build(); // Build the document
+    .setTitle('Mesh_UI Components API')
+    .setDescription('Mesh_UI Components API description')
+    .setVersion('0.1')
+    .build();
 
   // Create a Swagger document using the application instance and the document configuration
   const document = SwaggerModule.createDocument(app, config);
