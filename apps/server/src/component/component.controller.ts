@@ -1,36 +1,44 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ComponentService } from './component.service';
 import { CreateComponentDto } from './dto/create-component.dto';
 import { UpdateComponentDto } from './dto/update-component.dto';
+import { ApiTags, ApiOperation, ApiParam } from '@nestjs/swagger';
 
-@Controller('api/component')
+@ApiTags('components')
+@Controller('component')
 export class ComponentController {
   constructor(private readonly componentService: ComponentService) { }
 
+  @ApiOperation({ summary: 'Create a new component' })
   @Post()
-  @HttpCode(HttpStatus.CREATED)
-  async create(@Body() createComponentDto: CreateComponentDto) {
-    return await this.componentService.create(createComponentDto);
+  create(@Body() createComponentDto: CreateComponentDto) {
+    return this.componentService.create(createComponentDto);
   }
 
+  @ApiOperation({ summary: 'Get all components' })
   @Get()
-  async findAll() {
-    return await this.componentService.findAll();
+  findAll() {
+    return this.componentService.findAll();
   }
 
+  @ApiOperation({ summary: 'Get a component by ID' })
+  @ApiParam({ name: 'id', description: 'The ID of the component' })
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    return await this.componentService.findOne(id);
+  findOne(@Param('id') id: string) {
+    return this.componentService.findOne(id);
   }
 
+  @ApiOperation({ summary: 'Update a component by ID' })
+  @ApiParam({ name: 'id', description: 'The ID of the component' })
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateComponentDto: UpdateComponentDto) {
-    return await this.componentService.update(id, updateComponentDto);
+  update(@Param('id') id: string, @Body() updateComponentDto: UpdateComponentDto) {
+    return this.componentService.update(id, updateComponentDto);
   }
 
+  @ApiOperation({ summary: 'Delete a component by ID' })
+  @ApiParam({ name: 'id', description: 'The ID of the component' })
   @Delete(':id')
-  @HttpCode(HttpStatus.NO_CONTENT)
-  async remove(@Param('id') id: string) {
-    await this.componentService.remove(id);
+  remove(@Param('id') id: string) {
+    return this.componentService.remove(id);
   }
 }
