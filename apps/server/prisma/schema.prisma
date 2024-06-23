@@ -1,0 +1,27 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Category {
+  id          String  @id @default(cuid()) @map("_id")
+  name       String  @unique
+  Components  Component[]
+}
+
+model Component {
+  id          String @id @default(cuid()) @map("_id")
+  title       String
+  code        String
+  category    String
+  cat         Category  @relation(fields: [category], references: [name])
+  views       Int @default(0)
+  isFeatured  Boolean @default(false)
+  createdAt   DateTime @default(now())
+}
