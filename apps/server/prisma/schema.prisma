@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,18 +9,18 @@ datasource db {
 }
 
 model Category {
-  id          String  @id @default(cuid()) @map("_id")
-  name       String  @unique
-  Components  Component[]
+  id          String      @id @default(cuid()) @map("_id")
+  name        String      @unique
+  components  Component[]
 }
 
 model Component {
-  id          String @id @default(cuid()) @map("_id")
+  id          String      @id @default(cuid()) @map("_id")
   title       String
   code        String
-  category    String
-  cat         Category  @relation(fields: [category], references: [name])
-  views       Int @default(0)
-  isFeatured  Boolean @default(false)
-  createdAt   DateTime @default(now())
+  categoryId  String
+  category    Category    @relation(fields: [categoryId], references: [id])
+  views       Int         @default(0)
+  isFeatured  Boolean     @default(false)
+  createdAt   DateTime    @default(now())
 }
