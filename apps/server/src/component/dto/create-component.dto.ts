@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
+import { IsBoolean, IsString } from 'class-validator';
 
 export class CreateComponentDto {
     @ApiProperty({ description: 'The title of the component' })
@@ -13,4 +13,8 @@ export class CreateComponentDto {
     @ApiProperty({ description: 'The category Id of the component' })
     @IsString()
     categoryId: string;
+
+    @ApiProperty({ description: 'Whether the component is featured' })
+    @IsBoolean()
+    isFeatured: boolean;
 }
